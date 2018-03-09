@@ -9,88 +9,76 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            userinfo:null,
+            userinfo: null,
             repos: [],
             starred: []
         }
     }
 
-    handleSearch (e) {
+    getGitHubApiUrl (username, type) {
+        const internalUser = username ? `/${username}` : ''
+        const internalType = type ? `/${type}` : ''
+        return `https://api.github.com/users${internalUser}${internalType}`
+    }
+
+    handleSearch(e) {
         const value = e.target.value
         const keyCode = e.which || e.keyCode
         const ENTER = 13
 
         if (keyCode === ENTER) {
-            ajax().get(`https://api.github.com/users/${value}`)
-            .then( (result) => {    
-                this.setState({
-                    userinfo: {
-                        login:result.login,
-                        userName: result.name,
-                        photo: result.avatar_url,
-                        repos: result.public_repos,
-                        followers : result.followers,
-                        following: result.following
-                    }
+            ajax().get(this.getGitHubApiUrl(value))
+                .then((result) => {
+                    this.setState({
+                        userinfo: {
+                            login: result.login,
+                            userName: result.name,
+                            photo: result.avatar_url,
+                            repos: result.public_repos,
+                            followers: result.followers,
+                            following: result.following
+                        },
+                        repos: [],
+                        starred: []
+
+                    })
+                }).catch((response, xhr) => {
+                    this.setState({
+                        userinfo: null,
+                        repos: [],
+                        starred: []
+                    })
                 })
-            }).catch( (response, xhr) => {
-                this.setState({
-                    userinfo: null,
-                    repos: [],
-                    starred: []
-                })
-            })
         }
     }
+
     
-    handleRepos (type) {
 
-        const list = []
-        ajax().get(`https://api.github.com/users/${this.state.userinfo.login}/${type}`)
-        .then( (result) => {
-            
-            for (let r of result) {
-                list.push({
-                    name:r.name,
-                    link: r.html_url
+    getRepos(type) {
+        return (e) => {
+            ajax().get(this.getGitHubApiUrl(this.state.userinfo.login, type))
+                .then((result) => {
+                    this.setState({
+                        [type]: result.map((repo) => ({
+                            name: repo.name,
+                            link: repo.html_url
+                        }))
+                    })
                 })
-            }            
-        })
-
-        console.log(list)
-
-        return list
-    }
-
-    getRepos () {
-
-        
-        const repos = this.handleRepos('repos')
-        this.setState({
-            repos:repos,
-            starred: []
-        })
-    }
-
-    getStarred () {
-        const repos = this.handleRepos('starred')
-        this.setState({
-            starred:repos,
-            repos: []
-        })
+        }
     }
 
     render() {
 
         return (
 
-            <AppContent 
-                userinfo={this.state.userinfo} 
+            <AppContent
+                userinfo={this.state.userinfo}
                 repos={this.state.repos}
                 starred={this.state.starred}
                 handleSearch={(e) => this.handleSearch(e)}
-                getRepos={() => this.getRepos()}
-                getStarred={() => this.getStarred()}
+                getRepos={this.getRepos('repos')}
+                getStarred={this.getRepos('starred')}
             />
 
         )
