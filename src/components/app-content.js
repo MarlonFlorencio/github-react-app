@@ -1,6 +1,6 @@
 'use strict'
 
-import React, {PropTypes}  from 'react'
+import React from 'react'
 import Search from './search'
 import UserInfo from './user-info'
 import Actions from './actions'
@@ -25,10 +25,10 @@ const AppContent = ({userinfo, repos, starred, isFetching, handleSearch, getRepo
 )
 
 AppContent.propTypes = {
-    userinfo: PropTypes.object,
-    repos: PropTypes.array.isRequired,
-    starred: PropTypes.array.isRequired,
-    isFetching:PropTypes.bool.isRequired,
+    userinfo: React.PropTypes.object,
+    repos: React.PropTypes.array.isRequired,
+    starred: React.PropTypes.array.isRequired,
+    isFetching:React.PropTypes.bool.isRequired,
     handleSearch : React.PropTypes.func.isRequired,
     getRepos : React.PropTypes.func.isRequired,
     getStarred : React.PropTypes.func.isRequired
