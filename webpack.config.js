@@ -40,6 +40,12 @@ module.exports = validate({
                 exclude: /node_modules/,
                 include: /src/,
                 loader: 'babel'
+            },
+            {
+              test: /\.css$/,
+              exclude: /node_modules/,
+              include: /src/,
+              loaders: ['style', 'raw']
             }
         ]
     }
