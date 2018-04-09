@@ -1,6 +1,7 @@
 'use strict'
 
 import React from 'react'
+import './search.css'
 
 const Search = ({ isDisabled, handleSearch }) => (
   <div className='search'>

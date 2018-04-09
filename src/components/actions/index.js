@@ -1,6 +1,7 @@
 'use strict'
 
 import React from 'react'
+import './actions.css'
 
 const Actions = ({ getRepos, getStarred }) => (
   <div className='actions'>
