@@ -28,8 +28,8 @@ module.exports = validate({
         new ExtractTextPlugin('[name]-[hash].css'),
         new DashboardPlugin(),
         new HtmlPlugin({
-          title: 'GITHUB APP1',
-          template : path.join(__dirname, 'src', 'html', 'template.html')
+          title: 'GitHub App',
+          template : path.join(__dirname, 'src', 'html', 'template.dev.html')
         })
     ],
 
