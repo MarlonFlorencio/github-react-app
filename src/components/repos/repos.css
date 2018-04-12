@@ -1,17 +1,9 @@
 @charset 'utf-8';
 
-.repos,
-.starred {
-  float: left;
-  width: 100%;
-}
-
-.repos li,
-.starred li {
+.repos-list li {
   padding: 10px 0;
 }
 
-.repos li + li,
-.starred li + li {
+.repos-list li + li {
   border-top: 1px solid #ccc;
 }

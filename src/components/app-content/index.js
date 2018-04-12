@@ -18,9 +18,23 @@ const AppContent = ({ userinfo, repos, starred, isFetching, handleSearch, getRep
 
     {!!userinfo && <Actions getRepos={getRepos} getStarred={getStarred} />}
 
-    {!!repos.length && <Repos className='repos' title='Repositórios:' repos={repos} />}
+    <div className='repos-container'>
+      {!!repos.length &&
+        <Repos
+          className='repos'
+          title='Repositórios:'
+          repos={repos}
+        />
+      }
 
-    {!!starred.length && <Repos className='starred' title='Favoritos:' repos={starred} />}
+      {!!starred.length &&
+        <Repos
+          className='starred'
+          title='Favoritos:'
+          repos={starred}
+        />
+      }
+    </div>
 
   </div>
 )
