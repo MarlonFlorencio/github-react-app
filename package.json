@@ -11,7 +11,7 @@
     "lint:watch": "gulp",
     "lint:fix": "standard --fix",
     "build-dev": "webpack --config webpack.config.js",
-    "build": "cross-env NODE_ENV=production webpack --progress --config webpack.prod.config -p",
+    "build": "cross-env NODE_ENV=production webpack --progress --config webpack/prod.config -p",
     "storybook": "start-storybook -p 9001 -c storybook",
     "build-storybook": "build-storybook -c storybook"
   },

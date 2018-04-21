@@ -1,15 +1,16 @@
 'use strict'
 
-import React from 'react'
-import './pagination.css'
+import React, { PropTypes } from 'react'
 import pagination from 'utils/pagination'
 import Page from './page'
+
+import './pagination.css'
 
 const Pagination = ({ total, activePage, pageLink, onClick }) => (
   <ul className='pagination'>
     {pagination({ total, activePage }).map((page, index) => (
-      <li key={index} style={activePage === page ? { color: 'red' } : null}>
-        <Page page={page} pageLink={`${pageLink}/${page}`} onClick={onClick} />
+      <li key={index} className={`pagination-item ${activePage === page ? 'active' : ''}`}>
+        <Page page={page} pageLink={pageLink.replace('%page%', page)} onClick={onClick} />
       </li>
     ))}
   </ul>
@@ -21,10 +22,10 @@ Pagination.defaultProps = {
 }
 
 Pagination.propTypes = {
-  total: React.PropTypes.number,
-  activePage: React.PropTypes.number,
-  pageLink: React.PropTypes.string,
-  onClick: React.PropTypes.func
+  total: PropTypes.number,
+  activePage: PropTypes.number,
+  pageLink: PropTypes.string,
+  onClick: PropTypes.func
 }
 
 export default Pagination

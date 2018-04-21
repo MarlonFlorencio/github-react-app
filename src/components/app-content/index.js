@@ -1,13 +1,14 @@
 'use strict'
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Search from 'components/search'
 import UserInfo from 'components/user-info'
 import Actions from 'components/actions'
 import Repos from 'components/repos'
 import './app-content.css'
 
-const AppContent = ({ userinfo, repos, starred, isFetching, handleSearch, getRepos, getStarred }) => (
+const AppContent = ({userinfo, repos, starred, isFetching, handleSearch, getRepos, getStarred, handlePagination}) => (
+
   <div className='app' >
 
     <Search isDisabled={isFetching} handleSearch={handleSearch} />
@@ -19,19 +20,21 @@ const AppContent = ({ userinfo, repos, starred, isFetching, handleSearch, getRep
     {!!userinfo && <Actions getRepos={getRepos} getStarred={getStarred} />}
 
     <div className='repos-container'>
-      {!!repos.length &&
+      {!!repos.repos.length &&
         <Repos
           className='repos'
           title='Repositórios:'
           repos={repos}
+          handlePagination={(clicked) => handlePagination('repos', clicked)}
         />
       }
 
-      {!!starred.length &&
+      {!!starred.repos.length &&
         <Repos
           className='starred'
           title='Favoritos:'
           repos={starred}
+          handlePagination={(clicked) => handlePagination('starred', clicked)}
         />
       }
     </div>
@@ -39,14 +42,20 @@ const AppContent = ({ userinfo, repos, starred, isFetching, handleSearch, getRep
   </div>
 )
 
+const reposPropTypesShape = {
+  repos: PropTypes.array.isRequired,
+  pagination: PropTypes.object
+}
+
 AppContent.propTypes = {
-  userinfo: React.PropTypes.object,
-  repos: React.PropTypes.array.isRequired,
-  starred: React.PropTypes.array.isRequired,
-  isFetching: React.PropTypes.bool.isRequired,
-  handleSearch: React.PropTypes.func.isRequired,
-  getRepos: React.PropTypes.func.isRequired,
-  getStarred: React.PropTypes.func.isRequired
+  userinfo: PropTypes.object,
+  repos: PropTypes.shape(reposPropTypesShape).isRequired,
+  starred: PropTypes.shape(reposPropTypesShape).isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  handleSearch: PropTypes.func.isRequired,
+  getRepos: PropTypes.func.isRequired,
+  getStarred: PropTypes.func.isRequired,
+  handlePagination: PropTypes.func.isRequired
 }
 
 export default AppContent
